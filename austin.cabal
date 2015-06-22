@@ -5,6 +5,7 @@ cabal-version:      >= 1.10
 
 executable site
   main-is:          site.hs
+  other-modules:    Text.Highlighting.Pygments
   build-depends:    base == 4.*
                   , hakyll == 4.6.*
   ghc-options:      -threaded

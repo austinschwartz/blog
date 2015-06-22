@@ -5,6 +5,7 @@ import           Hakyll.Web.Feed
 import           Hakyll.Web.Tags
 import qualified Data.Set as S
 import           Text.Pandoc.Options
+import           Text.Highlighting.Pygments (toHtml)
 
 
 feedConfig :: FeedConfiguration
@@ -25,6 +26,18 @@ pandocMathCompiler =
                 writerHTMLMathMethod = MathJax ""
                 }
     in pandocCompilerWith defaultHakyllReaderOptions writerOptions
+
+
+blockToHtml :: Block -> IO Block
+blockToHtml x@(CodeBlock attr _) | attr == nullAttr = return x
+blockToHtml x@(CodeBlock (_,[],_) _) = return x
+blockToHtml (CodeBlock (_,language:_,_) text) = do
+  colored <- toHtml text language
+  return (RawBlock (Format "html") colored)
+blockToHtml x = return x
+
+codeBlocksToHtml :: Pandoc -> IO Pandoc
+codeBlocksToHtml = walkM blockToHtml
 
 main :: IO ()
 main = hakyll $ do
