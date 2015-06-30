@@ -28,15 +28,15 @@ pandocMathCompiler =
 
 main :: IO ()
 main = hakyll $ do
-    match "images/*" $ do
+    match "assets/images/*" $ do
         route   idRoute
         compile copyFileCompiler
 
-    match "css/*.css" $ do
+    match "assets/css/*.css" $ do
         route   idRoute
         compile compressCssCompiler
 
-    match "css/*.scss" $ do
+    match "assets/css/*.scss" $ do
         route   $ setExtension "css"
         compile $ getResourceString 
           >>= withItemBody (unixFilter "sass" ["-s", "--scss"]) 
@@ -63,23 +63,10 @@ main = hakyll $ do
                 >>= loadAndApplyTemplate "templates/default.html" archiveCtx
                 >>= relativizeUrls
 
-    match "index.html" $ do
-        route idRoute
-        compile $ do
-            posts <- recentFirst =<< loadAll "posts/*"
-            let indexCtx =
-                    listField "posts" postCtx (return posts) `mappend`
-                    constField "title" "Home"                `mappend`
-                    defaultContext
-            getResourceBody
-                >>= applyAsTemplate indexCtx
-                >>= loadAndApplyTemplate "templates/default.html" indexCtx
-                >>= relativizeUrls
-
-    match "gpg.md" $ do
+    match "index.md" $ do
         route $ setExtension "html"
         compile $ pandocMathCompiler
-            >>= loadAndApplyTemplate "templates/default.html" postCtx
+            >>= loadAndApplyTemplate "templates/index.html" postCtx
             >>= relativizeUrls
 
     match "partials/*"  $ compile templateCompiler
