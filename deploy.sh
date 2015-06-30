@@ -1,6 +1,4 @@
-cp -r _site/* ../nawns.github.io/
-cd ../nawns.github.io/;
-git add *;
-git commit -a -m "automated commit";
-git push;
-cd ../austin;
+rm -rf _site
+./site clean
+./site build
+rsync -avz _site/ root@austinschwartz.com:/var/www/austinschwartz.com/
