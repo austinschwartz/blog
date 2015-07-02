@@ -28,6 +28,14 @@ pandocMathCompiler =
 
 main :: IO ()
 main = hakyll $ do
+    match "assets/fonts/*" $ do
+        route   idRoute
+        compile copyFileCompiler
+
+    match "assets/js/*" $ do
+        route   idRoute
+        compile copyFileCompiler
+
     match "assets/images/*" $ do
         route   idRoute
         compile copyFileCompiler
@@ -49,25 +57,25 @@ main = hakyll $ do
             >>= loadAndApplyTemplate "templates/default.html" postCtx
             >>= relativizeUrls
 
-    create ["archive.html"] $ do
+    match "index.html" $ do
+        route idRoute
+        compile $ getResourceBody
+            >>= loadAndApplyTemplate "templates/blank.html" homeCtx
+            >>= relativizeUrls
+
+    create ["posts/index.html"] $ do
         route idRoute
         compile $ do
-            posts <- recentFirst =<< loadAll "posts/*"
+            posts <- recentFirst =<< loadAll "posts/*.md"
             let archiveCtx =
                     listField "posts" postCtx (return posts) `mappend`
-                    constField "title" "Archives"            `mappend`
+                    constField "title" "Posts"            `mappend`
                     defaultContext
 
             makeItem ""
                 >>= loadAndApplyTemplate "templates/archive.html" archiveCtx
                 >>= loadAndApplyTemplate "templates/default.html" archiveCtx
                 >>= relativizeUrls
-
-    match "index.md" $ do
-        route $ setExtension "html"
-        compile $ pandocMathCompiler
-            >>= loadAndApplyTemplate "templates/index.html" postCtx
-            >>= relativizeUrls
 
     match "partials/*"  $ compile templateCompiler
     match "templates/*" $ compile templateCompiler
@@ -77,3 +85,8 @@ postCtx :: Context String
 postCtx =
     dateField "date" "%B %e, %Y" `mappend`
     defaultContext
+
+homeCtx :: Context String
+homeCtx =
+    constField "title" "Home" `mappend`
+    postCtx
