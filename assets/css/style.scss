@@ -1,13 +1,29 @@
+$background: #282a36;
+$current:    #44475a;
+$selection:  #44475a;
+$foreground: #f8f8f2;
+$comment:    #6272a4;
+$cyan:       #8be9fd;
+$green:      #50fa7b;
+$orange:     #ffb86c; 
+$pink:       #ff79c6;
+$purple:     #bd93f9;
+$red:        #ff5555;
+$yellow:     #f1fa8c;
+
+$main-font:   Ubuntu,sans-serif;
+$header-font: Merriweather,serif;
+
 body {
   font-size: 20px;
   /*font-family: 'EB Garamond', Libertine, Palatino, 'Palatino Linotype', 'Book Antiqua', Georgia, 'Times New Roman', serif;*/
-  font-family: Ubuntu,sans-serif;
+  font-family: $main-font;
   background: #44475a;
   color: #fff;
 }
 
 h1 {
-  font-family: Merriweather,serif;
+  font-family: $header-font;
 }
 
 pre code {
@@ -21,16 +37,16 @@ pre code {
   top: 0;
   width: 100%;
   height: 5px;
-  background-image: linear-gradient(to left, #ff79c6 0%, #ff79c6 100%);
+  background-image: linear-gradient(to left, $pink 0%, $pink 100%);
   z-index: 10001;
 }
 
 a, a:active {
-  color: #bd93f9;
+  color: $purple;
   text-decoration: none;
 }
 a:visited {
-  color: #bd93f9;
+  color: $purple;
 }
 
 /* index page */
