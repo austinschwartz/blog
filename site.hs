@@ -57,11 +57,20 @@ main = hakyll $ do
             >>= loadAndApplyTemplate "templates/default.html" postCtx
             >>= relativizeUrls
 
-    match "index.html" $ do
+    create ["index.html"] $ do
         route idRoute
-        compile $ getResourceBody
-            >>= loadAndApplyTemplate "templates/blank.html" homeCtx
-            >>= relativizeUrls
+        compile $ do
+            posts <- recentFirst =<< loadAll "posts/*.md"
+            let archiveCtx =
+                    listField "posts" postCtx (return posts) `mappend`
+                    constField "title" "Posts"            `mappend`
+                    defaultContext
+
+            makeItem ""
+                >>= loadAndApplyTemplate "partials/post-list.html" archiveCtx
+                >>= loadAndApplyTemplate "partials/index.html" archiveCtx
+                >>= loadAndApplyTemplate "templates/blank.html" archiveCtx
+                >>= relativizeUrls
 
     create ["posts/index.html"] $ do
         route idRoute
@@ -73,7 +82,7 @@ main = hakyll $ do
                     defaultContext
 
             makeItem ""
-                >>= loadAndApplyTemplate "templates/archive.html" archiveCtx
+                >>= loadAndApplyTemplate "partials/post-list.html" archiveCtx
                 >>= loadAndApplyTemplate "templates/default.html" archiveCtx
                 >>= relativizeUrls
 
@@ -83,7 +92,8 @@ main = hakyll $ do
 --------------------------------------------------------------------------------
 postCtx :: Context String
 postCtx =
-    dateField "date" "%B %e, %Y" `mappend`
+    dateField "date" "%m/%d/%y" `mappend`
+    dateField "dateLong" "%B %e, %Y" `mappend`
     defaultContext
 
 homeCtx :: Context String
