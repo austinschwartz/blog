@@ -11,15 +11,24 @@ $purple:     #bd93f9;
 $red:        #ff5555;
 $yellow:     #f1fa8c;
 
-$main-font:   Ubuntu,sans-serif;
+$main-font:   Enriqueta,serif;
 $header-font: Merriweather,serif;
 
 body {
-  font-size: 20px;
-  /*font-family: 'EB Garamond', Libertine, Palatino, 'Palatino Linotype', 'Book Antiqua', Georgia, 'Times New Roman', serif;*/
+  font-size: 18px;
   font-family: $main-font;
-  background: #44475a;
-  color: #fff;
+  background: #fff;
+  color: #000;
+}
+
+.sidebar {
+  background: #eee;
+  color: #444;
+  width: 300px;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
 }
 
 h1 {
@@ -41,34 +50,19 @@ pre code {
   z-index: 10001;
 }
 
-a, a:active {
-  color: $purple;
+
+a {
   text-decoration: none;
-}
-a:visited {
-  color: $purple;
-}
-
-/* index page */
-.links {
-  margin-top: 50px;
-  color: #fff;
-  ul {
-    padding: 0;
-    list-style-type: none;
-    font-size: 2.5em;
-    li { 
-      a i {
-        display: inline-block;
-        width: 2em;
-        text-align: center;
-      }
-    }
+  color: $pink;
+  border-bottom: 1px dotted $pink;
+  -webkit-transition: all 0.1s ease-in-out;
+  -moz-transition: all 0.1s ease-in-out;
+  -ms-transition: all 0.1s ease-in-out;
+  transition: all 0.1s ease-in-out;
+  &:hover {
+    color: $purple;
+    border-bottom: 1px dotted $purple;
   }
-}
-
-h1 {
-    font-size: 4em;
 }
 
 /* posts */
