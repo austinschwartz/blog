@@ -62,7 +62,7 @@ pre code {
 a {
   text-decoration: none;
   color: $main-color;
-  border-bottom: 1px dotted $pink;
+  border-bottom: 1px dotted $main-color;
   -webkit-transition: all 0.1s ease-in-out;
   -moz-transition: all 0.1s ease-in-out;
   -ms-transition: all 0.1s ease-in-out;
