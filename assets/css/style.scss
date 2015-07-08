@@ -13,6 +13,8 @@ $yellow:     #f1fa8c;
 
 $main-font:   Enriqueta,serif;
 $header-font: Merriweather,serif;
+$main-color: $red;
+$hover-color: $orange;
 
 body {
   font-size: 18px;
@@ -52,22 +54,22 @@ pre code {
   top: 0;
   width: 100%;
   height: 5px;
-  background-image: linear-gradient(to left, $pink 0%, $pink 100%);
+  background-image: linear-gradient(to left, $main-color 0%, $main-color 100%);
   z-index: 10001;
 }
 
 
 a {
   text-decoration: none;
-  color: $pink;
+  color: $main-color;
   border-bottom: 1px dotted $pink;
   -webkit-transition: all 0.1s ease-in-out;
   -moz-transition: all 0.1s ease-in-out;
   -ms-transition: all 0.1s ease-in-out;
   transition: all 0.1s ease-in-out;
   &:hover {
-    color: $purple;
-    border-bottom: 1px dotted $purple;
+    color: $hover-color;
+    border-bottom: 1px dotted $hover-color;
   }
 }
 
@@ -75,4 +77,18 @@ a {
 
 .info {
   margin-bottom: 20px;
+}
+
+nav {
+  &.primary{
+    margin-top: 50px;
+    display: table;
+    margin: 0 auto;
+    ul,
+    ul li {
+      margin: 0px;
+      display: inline;
+      position: relative;
+    }
+  }
 }

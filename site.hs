@@ -57,6 +57,12 @@ main = hakyll $ do
             >>= loadAndApplyTemplate "templates/default.html" postCtx
             >>= relativizeUrls
 
+    match "books.md" $ do
+        route $ setExtension "html"
+        compile $ pandocMathCompiler
+            >>= loadAndApplyTemplate "templates/default.html" postCtx
+            >>= relativizeUrls
+
     create ["index.html"] $ do
         route idRoute
         compile $ do
