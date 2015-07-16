@@ -54,13 +54,7 @@ main = hakyll $ do
         route $ setExtension "html"
         compile $ pandocMathCompiler
             >>= loadAndApplyTemplate "partials/post.html"    postCtx
-            >>= loadAndApplyTemplate "templates/default.html" postCtx
-            >>= relativizeUrls
-
-    match "books.md" $ do
-        route $ setExtension "html"
-        compile $ pandocMathCompiler
-            >>= loadAndApplyTemplate "templates/default.html" postCtx
+            >>= loadAndApplyTemplate "templates/blank.html" postCtx
             >>= relativizeUrls
 
     create ["index.html"] $ do
@@ -89,7 +83,7 @@ main = hakyll $ do
 
             makeItem ""
                 >>= loadAndApplyTemplate "partials/post-list.html" archiveCtx
-                >>= loadAndApplyTemplate "templates/default.html" archiveCtx
+                >>= loadAndApplyTemplate "templates/blank.html" archiveCtx
                 >>= relativizeUrls
 
     match "partials/*"  $ compile templateCompiler

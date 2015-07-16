@@ -10,17 +10,23 @@ $pink:       #ff79c6;
 $purple:     #bd93f9;
 $red:        #ff5555;
 $yellow:     #f1fa8c;
+$white:      #FFF;
+$black:      #000;
 
 $main-font:   Enriqueta,serif;
 $header-font: Merriweather,serif;
-$main-color: $red;
-$hover-color: $orange;
+$a-color:          $pink;
+$h-color:          $black;
+$main-color:       $black;
+$hover-color:      $pink;
+$background-color: $white;
 
 body {
   font-size: 18px;
   font-family: $main-font;
-  background: #fff;
-  color: #000;
+  background: $background-color;
+  color: $main-color;
+  margin-top: 30px;
 }
 
 li {
@@ -33,6 +39,10 @@ ul {
 
 h1 {
   font-family: $header-font;
+}
+
+h2 a {
+  color: $h-color;
 }
 
 code {
@@ -48,28 +58,32 @@ pre code {
   font-family: monaco,Consolas,Lucida Console,monospace; 
 }
 
-
-.gradient-bar {
+#bar {
   position: fixed;
   top: 0;
   width: 100%;
   height: 5px;
-  background-image: linear-gradient(to left, $main-color 0%, $main-color 100%);
+  /*background-image: linear-gradient(to left, $main-color 0%, $main-color 100%);*/
   z-index: 10001;
+
+  background: url(http://i.imgur.com/aLodVU4.jpg);
+  background-size: cover;
+  background-position: left 60%;
+  overflow: hidden;
 }
 
 
 a {
   text-decoration: none;
-  color: $main-color;
-  border-bottom: 1px dotted $main-color;
+  color: $a-color;
+  /*border-bottom: 1px dotted $main-color;*/
   -webkit-transition: all 0.1s ease-in-out;
   -moz-transition: all 0.1s ease-in-out;
   -ms-transition: all 0.1s ease-in-out;
   transition: all 0.1s ease-in-out;
   &:hover {
     color: $hover-color;
-    border-bottom: 1px dotted $hover-color;
+    /*border-bottom: 1px dotted $hover-color;*/
   }
 }
 
