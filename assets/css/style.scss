@@ -85,6 +85,9 @@ a {
     color: $hover-color;
     /*border-bottom: 1px dotted $hover-color;*/
   }
+  ul & {
+    color: $main-color;
+  }
 }
 
 /* posts */
