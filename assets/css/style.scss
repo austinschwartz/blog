@@ -72,21 +72,29 @@ pre code {
   overflow: hidden;
 }
 
-
 a {
-  text-decoration: none;
-  color: $a-color;
-  /*border-bottom: 1px dotted $main-color;*/
-  -webkit-transition: all 0.1s ease-in-out;
-  -moz-transition: all 0.1s ease-in-out;
-  -ms-transition: all 0.1s ease-in-out;
-  transition: all 0.1s ease-in-out;
+  color: $main-color;
   &:hover {
-    color: $hover-color;
-    /*border-bottom: 1px dotted $hover-color;*/
-  }
-  ul & {
     color: $main-color;
+  }
+  text-decoration: none;
+}
+
+.post {
+  a {
+   color: $a-color;
+    border-bottom: 1px dotted $a-color;
+    -webkit-transition: all 0.1s ease-in-out;
+    -moz-transition: all 0.1s ease-in-out;
+    -ms-transition: all 0.1s ease-in-out;
+    transition: all 0.1s ease-in-out;
+    &:hover {
+      color: $hover-color;
+      /*border-bottom: 1px dotted $hover-color;*/
+    }
+    ul & {
+      color: $main-color;
+    }
   }
 }
 
