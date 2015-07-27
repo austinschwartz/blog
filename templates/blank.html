@@ -4,11 +4,24 @@
   </head>
   <body>
     <div id="bar"></div>
-    <div class="container">
-      <div class="body">
+    <div class="wrapper">
+      <div class="header">
+        <h1 id="logo">nonis</h1>
+        <ul class="menu">
+          <li><a href="/">Home</a></li>
+          <li><a href="/posts">Posts</a></li>
+          <li><a href="/notes">Notes</a></li>
+          <li><a href="/about">About</a></li>
+          <li><a href="/books">Books</a></li>
+        </ul>
+      </div>
+      <div class="content">
+        <hr>
         $body$
       </div>
-      $partial("partials/footer.html")$
+      <div class="footer">
+        $partial("partials/footer.html")$
+      </div>
     </div>
   </body>
 </html>

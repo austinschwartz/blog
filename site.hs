@@ -57,6 +57,12 @@ main = hakyll $ do
             >>= loadAndApplyTemplate "templates/blank.html" postCtx
             >>= relativizeUrls
 
+    match "about.md" $ do
+        route $ gsubRoute "about.md" (const "about/index.html") 
+        compile $ pandocMathCompiler
+            >>= loadAndApplyTemplate "templates/blank.html" postCtx
+            >>= relativizeUrls
+
     create ["index.html"] $ do
         route idRoute
         compile $ do
