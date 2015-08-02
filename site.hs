@@ -53,8 +53,15 @@ main = hakyll $ do
     match "posts/*" $ do
         route $ setExtension "html"
         compile $ pandocMathCompiler
-            >>= loadAndApplyTemplate "partials/post.html"    postCtx
+            >>= loadAndApplyTemplate "partials/post.html"   postCtx
             >>= loadAndApplyTemplate "templates/blank.html" postCtx
+            >>= relativizeUrls
+
+    match "notes/*" $ do
+        route $ setExtension "html"
+        compile $ pandocMathCompiler
+            >>= loadAndApplyTemplate "partials/post.html"   noteCtx
+            >>= loadAndApplyTemplate "templates/blank.html" noteCtx
             >>= relativizeUrls
 
     match "about.md" $ do
@@ -88,7 +95,21 @@ main = hakyll $ do
                     defaultContext
 
             makeItem ""
-                >>= loadAndApplyTemplate "partials/post-list.html" archiveCtx
+                >>= loadAndApplyTemplate "partials/posts.html" archiveCtx
+                >>= loadAndApplyTemplate "templates/blank.html" archiveCtx
+                >>= relativizeUrls
+
+    create ["notes/index.html"] $ do
+        route idRoute
+        compile $ do
+            posts <- recentFirst =<< loadAll "notes/*.md"
+            let archiveCtx =
+                    listField "notes" noteCtx (return posts) `mappend`
+                    constField "title" "Notes"            `mappend`
+                    defaultContext
+
+            makeItem ""
+                >>= loadAndApplyTemplate "partials/notes.html" archiveCtx
                 >>= loadAndApplyTemplate "templates/blank.html" archiveCtx
                 >>= relativizeUrls
 
@@ -98,6 +119,12 @@ main = hakyll $ do
 --------------------------------------------------------------------------------
 postCtx :: Context String
 postCtx =
+    dateField "date" "%m/%d/%y" `mappend`
+    dateField "dateLong" "%B %e, %Y" `mappend`
+    defaultContext
+
+noteCtx :: Context String
+noteCtx =
     dateField "date" "%m/%d/%y" `mappend`
     dateField "dateLong" "%B %e, %Y" `mappend`
     defaultContext
