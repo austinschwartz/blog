@@ -47,16 +47,16 @@ h1, h2, h3, em, strong {font-weight: 400;}
 h1, h2, h3, h4 {text-align: left;}
 
 em {
-  font-family: 'GandhiSansItalic';
 }
+
 strong {
-  font-family: 'GandhiSansBold';
 }
 
 .content h1, .footer h1, h2, h3 {
   font-family: $header-font; 
   line-height: 1em;
 }
+
 a {
   color: $main-color;
   text-decoration: none;
@@ -109,6 +109,11 @@ code {
   font-size: 14px;
   padding: 2px 5px;
   margin-right: 10px;
+}
+
+pre {
+  background-color: #333233;
+  padding: 7px;
 }
 
 pre code {
