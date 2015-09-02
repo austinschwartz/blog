@@ -1,2 +1,1 @@
-* Book
-* Book 2
+Book reviews will go here at some point

@@ -64,12 +64,6 @@ main = hakyll $ do
             >>= loadAndApplyTemplate "templates/blank.html" noteCtx
             >>= relativizeUrls
 
-    match "about.md" $ do
-        route $ gsubRoute "about.md" (const "about/index.html") 
-        compile $ pandocMathCompiler
-            >>= loadAndApplyTemplate "templates/blank.html" postCtx
-            >>= relativizeUrls
-
     create ["index.html"] $ do
         route idRoute
         compile $ do
@@ -78,12 +72,17 @@ main = hakyll $ do
                     listField "posts" postCtx (return posts) `mappend`
                     constField "title" "Posts"            `mappend`
                     defaultContext
-
             makeItem ""
-                >>= loadAndApplyTemplate "partials/post-list.html" archiveCtx
-                >>= loadAndApplyTemplate "partials/index.html" archiveCtx
-                >>= loadAndApplyTemplate "templates/blank.html" archiveCtx
-                >>= relativizeUrls
+              >>= loadAndApplyTemplate "partials/post-list.html" archiveCtx
+              >>= loadAndApplyTemplate "partials/about.html" archiveCtx
+              >>= loadAndApplyTemplate "templates/blank.html" archiveCtx
+              >>= relativizeUrls
+
+    match "books.md" $ do
+        route $ gsubRoute "books.md" (const "books/index.html") 
+        compile $ pandocMathCompiler
+            >>= loadAndApplyTemplate "templates/blank.html" postCtx
+            >>= relativizeUrls
 
     create ["posts/index.html"] $ do
         route idRoute
