@@ -73,10 +73,10 @@ main = hakyll $ do
                     constField "title" "Posts"            `mappend`
                     defaultContext
             makeItem ""
-              >>= loadAndApplyTemplate "partials/post-list.html" archiveCtx
-              >>= loadAndApplyTemplate "partials/about.html" archiveCtx
-              >>= loadAndApplyTemplate "templates/blank.html" archiveCtx
-              >>= relativizeUrls
+                >>= loadAndApplyTemplate "partials/post-list.html" archiveCtx
+                >>= loadAndApplyTemplate "partials/about.html" archiveCtx
+                >>= loadAndApplyTemplate "templates/blank.html" archiveCtx
+                >>= relativizeUrls
 
     match "books.md" $ do
         route $ gsubRoute "books.md" (const "books/index.html") 
@@ -92,7 +92,6 @@ main = hakyll $ do
                     listField "posts" postCtx (return posts) `mappend`
                     constField "title" "Posts"            `mappend`
                     defaultContext
-
             makeItem ""
                 >>= loadAndApplyTemplate "partials/posts.html" archiveCtx
                 >>= loadAndApplyTemplate "templates/blank.html" archiveCtx
@@ -106,7 +105,6 @@ main = hakyll $ do
                     listField "notes" noteCtx (return posts) `mappend`
                     constField "title" "Notes"            `mappend`
                     defaultContext
-
             makeItem ""
                 >>= loadAndApplyTemplate "partials/notes.html" archiveCtx
                 >>= loadAndApplyTemplate "templates/blank.html" archiveCtx
