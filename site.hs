@@ -1,9 +1,12 @@
 {-# LANGUAGE OverloadedStrings #-}
 import           Data.Monoid (mappend)
 import           Hakyll
+import           System.Process
+import           Text.Pandoc
 import           Hakyll.Web.Feed
 import           Hakyll.Web.Tags
 import qualified Data.Set as S
+import Data.Char
 import           Text.Pandoc.Options
 
 
@@ -26,6 +29,38 @@ pandocMathCompiler =
                 }
     in pandocCompilerWith defaultHakyllReaderOptions writerOptions
 
+customPandocCompiler :: Compiler (Item String)
+customPandocCompiler =
+  let extraExtensions =
+        [ Ext_east_asian_line_breaks
+        , Ext_tex_math_double_backslash
+        ]
+      customExtensions = foldr S.insert pandocExtensions extraExtensions
+      writerOptions = defaultHakyllWriterOptions {
+          writerExtensions = customExtensions
+        , writerHighlight = True
+        , writerHTMLMathMethod = MathJax ""
+        }
+  in   pandocCompilerWithTransformM defaultHakyllReaderOptions
+                                    writerOptions
+                                    pygmentize
+
+-- modified from bitbucket.org/honk/pandoc-filters
+pygmentize :: Pandoc -> Compiler Pandoc
+pygmentize (Pandoc meta bs) = Pandoc meta <$> mapM highlight bs
+
+highlight :: Block -> Compiler Block
+highlight (CodeBlock (_, options, _) code) =
+  RawBlock "html" <$> unsafeCompiler (pygments code options)
+highlight x = return x
+
+pygments :: String -> [String] -> IO String
+pygments code options =
+  case options of
+    (lang:_) ->
+      readProcess "pygmentize" ["-l", toLower <$> lang,  "-f", "html"] code
+    _ -> return $ "<div class =\"highlight\"><pre>" ++ code ++ "</pre></div>"
+
 main :: IO ()
 main = hakyll $ do
     match "assets/fonts/*" $ do
@@ -47,19 +82,19 @@ main = hakyll $ do
     match "assets/css/*.scss" $ do
         route   $ setExtension "css"
         compile $ getResourceString 
-          >>= withItemBody (unixFilter "sass" ["-s", "--scss"]) 
+          >>= withItemBody (unixFilter "sassc" ["-s"]) 
           >>= return . fmap compressCss
 
     match "posts/*" $ do
         route $ setExtension "html"
-        compile $ pandocMathCompiler
+        compile $ customPandocCompiler
             >>= loadAndApplyTemplate "partials/post.html"   postCtx
             >>= loadAndApplyTemplate "templates/blank.html" postCtx
             >>= relativizeUrls
 
     match "notes/*" $ do
         route $ setExtension "html"
-        compile $ pandocMathCompiler
+        compile $ customPandocCompiler
             >>= loadAndApplyTemplate "partials/post.html"   noteCtx
             >>= loadAndApplyTemplate "templates/blank.html" noteCtx
             >>= relativizeUrls
