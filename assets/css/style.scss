@@ -14,7 +14,7 @@ $white:   #FFF;
 $black:   #000;
 
 $main-font: "Nunito", sans-serif;
-$header-font: "Merriweather", serif;
+$header-font: "Open Sans", sans-serif;
 $title-font: "hydrophilia-iced";
 $a-color:    $red;
 $h-color:    $black;
@@ -29,7 +29,7 @@ body {
   line-height: 1.4em;
   font-size: 1.05em;
   font-weight: 300;
-  width: 900px;
+  max-width: 740px;
   margin: 0 auto;
   background: $background-color;
 }
@@ -57,24 +57,44 @@ strong {
 }
 
 a {
-  color: $main-color;
-  text-decoration: none;
-}
-.post a {
   color: $a-color;
   -webkit-transition: all 0.1s ease-in-out;
   -moz-transition: all 0.1s ease-in-out;
   -ms-transition: all 0.1s ease-in-out;
   transition: all 0.1s ease-in-out;
   &:hover {
-  color: $hover-color;
-  border-bottom: 1px dotted $hover-color;
+    color: $hover-color;
+    border-bottom: 1px dotted $hover-color;
   }
   ul & {
-  text-decoration: none;
-  color: $main-color;
+    text-decoration: none;
+    color: $main-color;
   }
 }
+
+.header a {
+  color: $main-color;
+  text-decoration: none;
+  &:hover {
+    color: $main-color;
+    border-bottom: 0px;
+  }
+}
+
+.overview {
+  max-width: 520px; margin: 25px auto;
+  a {
+    text-decoration: none;
+  }
+}
+.detail { font-size: 20px; margin-left: 150px;  text-decoration: none;}
+.archive { font-size: 14px; }
+.date {
+    line-height: 2em; padding-top: 2px;
+    float: left; width: 135px; color: #555;
+    text-align: right; font-size: 14px;
+}
+
 
 .wrapper {
   margin-top: 35px;
@@ -84,10 +104,11 @@ a {
 .header {
   margin-left: 70px;
   padding-bottom: 20px;
+  max-width: 640px;
 }
 
 .content, .footer {
-  width: 640px;
+  max-width: 640px;
   margin: 0 auto;
   text-align: justify;
   line-height: 1.5em;
@@ -116,11 +137,13 @@ pre {
 }
 
 code {
-  font-size: 14px;
-  padding: 2px;
-  margin-right: 10px;
+  font-size: 13px;
+  padding: 2px 5px;
+  margin: 0 2px;
   background: rgb(238, 238, 238);
-  font-family: monaco,Consolas,Lucida Console,monospace; 
+  /*font-family: monaco,Consolas,Lucida Console,monospace; */
+  font-family: Menlo, Monaco, "Andale Mono", "lucida console", "Courier New", monospace;
+  border-radius: 4px;
 }
 
 #bar {
@@ -140,4 +163,30 @@ code {
   overflow: hidden;
 }
 
+img {
+  width: 100%;
+}
 
+blockquote {
+  padding: 0 1em;
+  color: #777;
+  border-left: 0.25em solid #ddd;
+}
+
+footer {
+  padding-top: 4em;
+  text-align: center;
+  color: #888;
+  font-style: italic;
+}
+
+h1 + .info { color: #555; margin-top: -15px; }
+
+@media(max-width: 380px){
+  .overview { margin-left: 0px; margin-right: 0px; }
+}
+
+@media(max-width: 740px){
+  .date { display: none; }
+  .detail { margin-left: 0px; text-align: center; }
+}

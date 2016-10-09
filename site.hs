@@ -85,18 +85,57 @@ main = hakyll $ do
           >>= withItemBody (unixFilter "sassc" ["-s"]) 
           >>= return . fmap compressCss
 
+    tags <- buildTags "posts/*" (fromCapture "tags/*.html")
+
+    tagsRules tags $ \tag pattern -> do
+      let title = "Posts tagged \"" ++ tag ++ "\""
+      route idRoute
+      compile $ do
+          posts <- recentFirst =<< loadAll pattern
+          let ctx = constField "title" title 
+                    `mappend` listField "posts" postCtx (return posts) 
+                    `mappend` defaultContext
+
+          makeItem ""
+              >>= loadAndApplyTemplate "partials/tag.html" ctx
+              >>= loadAndApplyTemplate "templates/blank.html" ctx
+              >>= relativizeUrls
+
+    noteTags <- buildTags "notes/*" (fromCapture "tags/*.html")
+
+    tagsRules noteTags $ \tag pattern -> do
+      let title = "Posts tagged \"" ++ tag ++ "\""
+      route idRoute
+      compile $ do
+          posts <- recentFirst =<< loadAll pattern
+          let ctx = constField "title" title 
+                    `mappend` listField "posts" postCtx (return posts) 
+                    `mappend` defaultContext
+
+          makeItem ""
+              >>= loadAndApplyTemplate "partials/tag.html" ctx
+              >>= loadAndApplyTemplate "templates/blank.html" ctx
+              >>= relativizeUrls
+
     match "posts/*" $ do
         route $ setExtension "html"
         compile $ customPandocCompiler
-            >>= loadAndApplyTemplate "partials/post.html"   postCtx
-            >>= loadAndApplyTemplate "templates/blank.html" postCtx
+            >>= loadAndApplyTemplate "partials/post.html"   (postCtxWithTags tags)
+            >>= loadAndApplyTemplate "templates/blank.html" (postCtxWithTags tags)
+            >>= relativizeUrls
+
+    match "posts-draft/*" $ do
+        route $ setExtension "html"
+        compile $ customPandocCompiler
+            >>= loadAndApplyTemplate "partials/post.html"   (postCtxWithTags tags)
+            >>= loadAndApplyTemplate "templates/blank.html" (postCtxWithTags tags)
             >>= relativizeUrls
 
     match "notes/*" $ do
         route $ setExtension "html"
         compile $ customPandocCompiler
-            >>= loadAndApplyTemplate "partials/post.html"   noteCtx
-            >>= loadAndApplyTemplate "templates/blank.html" noteCtx
+            >>= loadAndApplyTemplate "partials/post.html"   (postCtxWithTags noteTags)
+            >>= loadAndApplyTemplate "templates/blank.html" (postCtxWithTags noteTags)
             >>= relativizeUrls
 
     create ["index.html"] $ do
@@ -109,15 +148,28 @@ main = hakyll $ do
                     defaultContext
             makeItem ""
                 >>= loadAndApplyTemplate "partials/post-list.html" archiveCtx
+                >>= loadAndApplyTemplate "partials/index2.html" archiveCtx
+                >>= loadAndApplyTemplate "templates/blank.html" archiveCtx
+                >>= relativizeUrls
+
+    create ["about.html"] $ do
+        route idRoute
+        compile $ do
+            posts <- recentFirst =<< loadAll "posts/*.md"
+            let archiveCtx =
+                    listField "posts" postCtx (return posts) `mappend`
+                    constField "title" "Posts"            `mappend`
+                    defaultContext
+            makeItem ""
                 >>= loadAndApplyTemplate "partials/about.html" archiveCtx
                 >>= loadAndApplyTemplate "templates/blank.html" archiveCtx
                 >>= relativizeUrls
 
-    match "books.md" $ do
-        route $ gsubRoute "books.md" (const "books/index.html") 
-        compile $ pandocMathCompiler
-            >>= loadAndApplyTemplate "templates/blank.html" postCtx
-            >>= relativizeUrls
+    {-match "books.html" $ do-}
+        {-route $ gsubRoute "books.html" (const "books/index.html") -}
+        {-compile $ pandocMathCompiler-}
+            {->>= loadAndApplyTemplate "templates/blank.html" postCtx-}
+            {->>= relativizeUrls-}
 
     create ["posts/index.html"] $ do
         route idRoute
@@ -137,7 +189,7 @@ main = hakyll $ do
         compile $ do
             posts <- recentFirst =<< loadAll "notes/*.md"
             let archiveCtx =
-                    listField "notes" noteCtx (return posts) `mappend`
+                    listField "notes" postCtx (return posts) `mappend`
                     constField "title" "Notes"            `mappend`
                     defaultContext
             makeItem ""
@@ -155,11 +207,14 @@ postCtx =
     dateField "dateLong" "%B %e, %Y" `mappend`
     defaultContext
 
-noteCtx :: Context String
-noteCtx =
-    dateField "date" "%m/%d/%y" `mappend`
-    dateField "dateLong" "%B %e, %Y" `mappend`
-    defaultContext
+postCtxWithTags :: Tags -> Context String
+postCtxWithTags tags = tagsField "tags" tags `mappend` postCtx
+
+{-noteCtx :: Context String-}
+{-noteCtx =-}
+    {-dateField "date" "%m/%d/%y" `mappend`-}
+    {-dateField "dateLong" "%B %e, %Y" `mappend`-}
+    {-defaultContext-}
 
 homeCtx :: Context String
 homeCtx =
