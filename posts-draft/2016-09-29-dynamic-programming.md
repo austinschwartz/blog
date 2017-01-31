@@ -4,25 +4,27 @@ author: Austin
 tags: competitive-programming, dynamic-programming
 ---
 
-This blog post has been adapted from lecture notes I wrote while teaching Competitive Programming at Purdue University during the Fall 2016 semester. I tend to gravitate towards an example-heavy teaching style, as I feel thats the way I learn the best. 
+This blog post has been adapted from lecture notes I wrote while teaching Competitive Programming at Purdue University during the Fall 2016 semester. I tend to gravitate towards an example-heavy teaching style, as I feel thats the way that I personally learn best. 
 
-I've layed out a few examples of problems that tend to build off of each other. However, dynamic programming is a huge topic, and thus theres likely a lot missing from this. Towards the end of this post I'll be including links to other resources where you'll be able to find more information. ...
+I've layed out a few examples of problems that tend to build off of each other. However, dynamic programming is a huge topic, and thus theres a lot missing from this. Notably missing are many of the canonical examples from literature (knapsack, rod cutting, etc). Towards the end of this post I'll be including links to other resources where you'll be able to find more information.
+
+Insert information on dp
 
 Example 1: Climbing Stairs
 -------------------------
 
-You are climbing a staircase. It takes n steps to reach to the top. Each time you can either climb 1 or 2 steps. In how many distinct ways can you climb to the top?
+You are climbing a staircase. It takes n steps to reach to the top. At every point in time, you can climb one step or two steps, but no more. In how many distinct ways can you climb to the top?
 
-Lets first think of what the first couple results would be. Given `n = 1`, we only have one way of climbing those steps, and thats by taking a single step. Given `n = 2`, we have two ways, one where we take 2 single steps, and one where we take a single step of size 2. Given `n = 3`, we have three ways: `1, 1, 1`, `1, 2`, and `2, 1`. Given `n = 4`, we can make the following series of steps: `1, 1, 1, 1`, `1, 1, 2`, `2, 1, 1`, `1, 2, 1`, or `2, 2` for a total of 5 ways.
+The best way of starting any problem is figuring out exactly what its asking, so lets first think of what the first couple results would be. Given `n = 1`, we only have one way of climbing those steps, and thats by taking a single step. Given `n = 2`, we have two ways, one where we take 2 single steps, and one where we take a single step of size 2. Given `n = 3`, we have three ways: `1, 1, 1`, `1, 2`, and `2, 1`. Given `n = 4`, we can make the following series of steps: `1, 1, 1, 1`, `1, 1, 2`, `2, 1, 1`, `1, 2, 1`, or `2, 2` for a total of 5 ways.
 
-At this point you should start seeing a pattern. .... We can model this recursively! The number of ways to climb `n` steps is equal to the number of ways to climb `n - 1` steps + the number of ways of climbing `n - 2` steps. So `f(n) = f(n - 1) + f(n - 2)`
-<center>
-$f(1) = 1$<br/>
-$f(2) = 2$<br/>
-$f(n) = f(n - 1) + f(n - 2)$
-</center>
+At this point you should start seeing a pattern. At each step, the number of ways to get there depends on the number of ways to get to `n - 1` and `n - 2`. We can model this recursively! The number of ways to climb `n` steps is equal to the number of ways to climb `n - 1` steps + the number of ways of climbing `n - 2` steps. So `f(n) = f(n - 1) + f(n - 2)`
+$$f(1) = 1 \\
+f(2) = 2 \\
+f(n) = f(n - 1) + f(n - 2)$$
 
-Simple recursion
+Now to solve this in code!
+
+With a simple recursive function, we get the following:
 ``` java
 int f(int n) {
   if (n <= 2)
@@ -91,36 +93,44 @@ $f(0, n) = 1$ <br/>
 $f(m, n) = f(m - 1, n) + f(m, n - 1)$
 </center>
 
+top down
+``` java
+int numberOfPaths(int m, int n) {
+  if (m == 0 || n == 0)
+    return 1;
+  return numberOfPaths(m - 1, n) + numberOfPaths(m, n - 1);
+}
+```
 
-Just showing bottom up this time
+bottom up
 ``` java
 int numberOfPaths(int m, int n)
 {
-    // Create a 2D table to store results of subproblems
-    int count[m][n];
+  // Create a 2D table to store results of subproblems
+  int count[m][n];
  
-    // Count of paths to reach any cell in first column is 1
-    for (int i = 0; i < m; i++)
-        count[i][0] = 1;
+  // Count of paths to reach any cell in first column is 1
+  for (int i = 0; i < m; i++)
+    count[i][0] = 1;
  
-    // Count of paths to reach any cell in first column is 1
-    for (int j = 0; j < n; j++)
-        count[0][j] = 1;
+  // Count of paths to reach any cell in first column is 1
+  for (int j = 0; j < n; j++)
+    count[0][j] = 1;
 
-    // Calculate count of paths for other cells in bottom-up manner using
-    // the recursive solution
-    for (int i = 1; i < m; i++)
-        for (int j = 1; j < n; j++)
-            count[i][j] = count[i-1][j] + count[i][j-1];
+  // Calculate count of paths for other cells in bottom-up manner using
+  // the recursive solution
+  for (int i = 1; i < m; i++)
+    for (int j = 1; j < n; j++)
+      count[i][j] = count[i-1][j] + count[i][j-1];
 
-    return count[m-1][n-1];
+  return count[m-1][n-1];
 }
 ```
 
 Follow-ups for this problem:
   *   How would you do this if you had certain cells blocked off?
-  *   Do this with just two rows
-  *   How would you do this if each cell had a cost, and you wanted to find the min cost path, traversing from the top left to bottom right and you can still only go down and right?
+  *   Do this with just two rows in the DP table (O(n) space)
+  *   How would you do this if each cell had a cost, and you wanted to find the min cost path, traversing from the top left to bottom right, still with the stipulation that you can only go down and right?
 
 Example 3 - Maximum Sum Subarray
 --------------------
@@ -242,21 +252,27 @@ We solve this similarly to the previous. We have to make a decision about includ
 Include node V: we can't include any of its children (say v1, v2, ..., vn), but we can include any grand child of V. 
 Don't include V: we can include any child of V.
 
-
-<center>
-$dp(V) = max(\sum_{i=1}^n{dp(v_i)}, C_v + (\sum_{i=1}^n{\text{sum of } dp(j) \text{ for all children j of } v_i}))$
-</center>
+$$
+\begin{align}
+dp(V) = max(\sum_{i=1}^n{dp(v_i)}, C_v + (\sum_{i=1}^n{\text{sum of } dp(j) \text{ for all children j of } v_i}))
+\end{align}
+$$
 
 We can simplify this by splitting this into two recurrence relations, where dp1(V) is the maximum sum where we take V, and dp2(V) is the maximum sum where we don’t take V. 
 
-<center>
-$dp1(V) = C_v + \sum_{i=1}^n{dp2(v_i)}$ </br>
-$dp2(V) = \sum_{i=1}^n{max(dp1(v_i), dp2(v_i))}$ </br>
-$sum(V) = max(dp1(V), dp2(V))$
-</center>
+$$
+\begin{aligned}
+dp_1(V)&=C_v + \sum_{i=1}^n{dp_2(v_i)}\\
+dp_2(V)&=\sum_{i=1}^n{max(dp1(v_i), dp_2(v_i))}\\
+sum(V)&=max(dp_1(V), dp_2(V))
+\end{aligned}
+$$
 
+Then we can compute sum(V) with 
 
-Then sum(V) = max(dp1(V), dp2(V))
+$$
+sum(V) = max(dp_1(V), dp_2(V))
+$$
 
 Note: you can find code for the solution here.
 

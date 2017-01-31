@@ -152,7 +152,7 @@ main = hakyll $ do
                 >>= loadAndApplyTemplate "templates/blank.html" archiveCtx
                 >>= relativizeUrls
 
-    create ["about.html"] $ do
+    create ["about/index.html"] $ do
         route idRoute
         compile $ do
             posts <- recentFirst =<< loadAll "posts/*.md"
