@@ -152,6 +152,20 @@ main = hakyll $ do
                 >>= loadAndApplyTemplate "templates/blank.html" archiveCtx
                 >>= relativizeUrls
 
+    create ["books/index.html"] $ do
+        route idRoute
+        compile $ do
+            posts <- recentFirst =<< loadAll "posts/*.md"
+            let archiveCtx =
+                    listField "posts" postCtx (return posts) `mappend`
+                    constField "title" "Posts"            `mappend`
+                    defaultContext
+            makeItem ""
+                >>= loadAndApplyTemplate "partials/books.html" archiveCtx
+                >>= loadAndApplyTemplate "templates/blank.html" archiveCtx
+                >>= relativizeUrls
+
+
     create ["about/index.html"] $ do
         route idRoute
         compile $ do
