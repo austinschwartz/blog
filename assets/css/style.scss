@@ -67,6 +67,21 @@ a {
   }
 }
 
+.books {
+  a {
+    text-decoration: none;
+    color: $main-color;
+    &:hover {
+      color: $hover-color;
+      border-bottom: 1px dotted $hover-color;
+    }
+  }
+  td {
+    display: table-cell;
+    vertical-align: top; 
+  }
+}
+
 .header a {
   color: $main-color;
   text-decoration: none;
@@ -101,8 +116,12 @@ a {
 
 .content, .footer {
   margin: 0 auto;
-  text-align: justify;
+  /*text-align: justify;*/
   line-height: 1.5em;
+}
+
+.content {
+  margin-bottom: 2em;
 }
 
 ul.menu {
@@ -184,11 +203,13 @@ blockquote {
 }
 
 footer {
-  padding-top: 4em;
-  text-align: center;
-  color: #888;
-  font-style: italic;
-  max-width: 640px;
+  /*padding-top: 4em;*/
+  /*text-align: center;*/
+  /*color: #888;*/
+  /*font-style: italic;*/
+  /*max-width: 640px;*/
+  border-top: 1px solid #ececec;
+  padding: 30px 0;
 }
 
 h1 + .info { color: #555; margin-top: -15px; }
