@@ -13,10 +13,11 @@ $yellow:  #f1fa8c;
 $white:   #FFF;
 $black:   #000;
 
-// $main-font: "Palatino Linotype", Palatino, Georgia, "Times New Roman", Times, serif;
 $main-font: "Nunito", sans-serif;
 $header-font: "Open Sans", sans-serif;
-$title-font: "hydrophilia-iced";
+// $main-font: "Palatino Linotype", Palatino, Georgia, "Times New Roman", Times, serif;
+$title-font: "Open Sans", sans-serif;
+//$title-font: "hydrophilia-iced";
 $a-color:    $red;
 $h-color:    $black;
 $main-color:    $black;
@@ -33,11 +34,16 @@ body {
   max-width: 740px;
   margin: 0 auto;
   background: $background-color;
+
+	@media screen and (max-width: 400px) {
+		font-size: smaller ;
+	}
 }
+
 
 #logo {
   font-family: $title-font;
-  font-size: 4em;
+  font-size: 2em;
   text-decoration: none;
   margin: 10px 10px 0 0;
   float: left;
@@ -97,12 +103,26 @@ a {
     text-decoration: none;
   }
 }
-.detail { font-size: 20px; margin-left: 150px;  text-decoration: none;}
-.archive { font-size: 14px; }
+.detail {
+	font-size: 20px; margin-left: 150px;  text-decoration: none;
+	@media screen and (max-width: 400px) {
+		font-size: 16px ;
+		margin-left: 40px;
+	}
+}
+.archive {
+	font-size: 14px;
+	@media screen and (max-width: 400px) {
+		font-size: 12px ;
+	}
+}
 .date {
     line-height: 2em; padding-top: 2px;
     float: left; width: 135px; color: #555;
     text-align: right; font-size: 14px;
+	@media screen and (max-width: 400px) {
+		display:none;
+	}
 }
 
 .wrapper {
@@ -118,6 +138,10 @@ a {
   margin: 0 auto;
   /*text-align: justify;*/
   line-height: 1.5em;
+}
+
+.author {
+  font-size: 16px;
 }
 
 .content {
@@ -210,6 +234,13 @@ footer {
   /*max-width: 640px;*/
   border-top: 1px solid #ececec;
   padding: 30px 0;
+  line-height: 2em;
+  color: #555;
+  font-size: 16px;
+	text-align:center;
+	@media screen and (max-width: 400px) {
+		font-size: 12px ;
+	}
 }
 
 h1 + .info { color: #555; margin-top: -15px; }
