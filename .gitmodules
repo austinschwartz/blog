@@ -1,0 +1,3 @@
+[submodule "scripts/goodreads-scraper"]
+	path = scripts/goodreads-scraper
+	url = https://www.github.com/austinschwartz/goodreads-scraper
