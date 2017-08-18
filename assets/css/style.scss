@@ -11,7 +11,8 @@ $purple:  #bd93f9;
 $red:   #ff5555;
 $yellow:  #f1fa8c;
 $white:   #FFF;
-$black:   #000;
+$black:   #333;
+$line-color: #fff;
 
 $main-font: "Nunito", sans-serif;
 $header-font: "Open Sans", sans-serif;
@@ -28,8 +29,10 @@ body {
   font-family: $main-font;
   color: $main-color;
   font-size: larger;
-  line-height: 1.4em;
-  font-size: 1.25em;
+  /*line-height: 1.4em;*/
+  /*font-size: 1.25em;*/
+	font-size: 17px;
+	line-height: 1.42857143;
   font-weight: 300;
   max-width: 740px;
   margin: 0 auto;
@@ -58,19 +61,22 @@ h1, h2, h3, h4 {text-align: left;}
 }
 
 a {
-  color: $a-color;
-  -webkit-transition: all 0.1s ease-in-out;
-  -moz-transition: all 0.1s ease-in-out;
-  -ms-transition: all 0.1s ease-in-out;
-  transition: all 0.1s ease-in-out;
+  /*color: $a-color;*/
+	color: $main-color;
+  transition: color 0.2s ease-in-out;
+	text-decoration: none;
   &:hover {
     color: $hover-color;
-    border-bottom: 1px dotted $hover-color;
+    /*border-bottom: 1px dotted $hover-color;*/
   }
   ul & {
     text-decoration: none;
     color: $main-color;
   }
+}
+
+.fa {
+	color: $a-color;
 }
 
 .books {
@@ -127,7 +133,7 @@ a {
 
 .wrapper {
   margin-top: 35px;
-  background: white;
+	padding: 20px;
 }
 
 .header {
@@ -137,7 +143,7 @@ a {
 .content, .footer {
   margin: 0 auto;
   /*text-align: justify;*/
-  line-height: 1.5em;
+  /*line-height: 1.5em;*/
 }
 
 .author {
@@ -145,7 +151,7 @@ a {
 }
 
 .content {
-  margin-bottom: 2em;
+  /*margin-bottom: 2em;*/
 }
 
 ul.menu {
@@ -190,7 +196,10 @@ code {
 }
 
 .post {
-  padding: 15px;
+  /*padding: 15px;*/
+	padding: 0px;
+	font-size: 17.5px;
+	font-weight: 400;
 }
 
 .post-list {
@@ -201,8 +210,8 @@ code {
 #thinline {
   height: 0.5px;
   border: 0;
-  border-top: 1px solid #ececec;
-  margin: 2em 0;
+  border-top: 1px solid $line-color;
+  margin: 1.5em 0;
   width: 100%;
 }
 
@@ -224,7 +233,9 @@ code {
 }
 
 img {
-  width: 100%;
+	display: block;
+	max-width: 100%;
+	height: auto
 }
 
 blockquote {
@@ -234,21 +245,31 @@ blockquote {
 }
 
 footer {
-  /*padding-top: 4em;*/
-  /*text-align: center;*/
-  /*color: #888;*/
-  /*font-style: italic;*/
-  /*max-width: 640px;*/
-  border-top: 1px solid #ececec;
+	margin-top: 50px;
+	margin-bottom: 80px;
+	text-align: right;
   padding: 30px 0;
+	padding-left: 15px;
+	padding-right: 15px;
   line-height: 2em;
   color: #555;
-  font-size: 16px;
-	text-align:center;
+	clear: left;
+	.fa {
+		padding: 0px 5px;
+		display: inline-block;
+		font-size: 32px;
+	}
 	@media screen and (max-width: 400px) {
 		font-size: 12px ;
 	}
 }
+
+.MathJax {
+	@media screen and (max-width: 400px) {
+		font-size: 0.8em;
+	}
+}
+
 
 h1 + .info { color: #555; margin-top: -15px; }
 
