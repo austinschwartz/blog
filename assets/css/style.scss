@@ -37,6 +37,7 @@ body {
   max-width: 740px;
   margin: 0 auto;
   background: $background-color;
+  line-height: 1.6;
 
 	@media screen and (max-width: 400px) {
 		font-size: smaller ;
@@ -55,6 +56,10 @@ body {
 h1, h2, h3, em, strong {font-weight: 400;}
 h1, h2, h3, h4 {text-align: left;}
 
+strong { 
+  font-weight: bold;
+}
+
 .content h1, .footer h1, h2, h3 {
   font-family: $header-font; 
   line-height: 1em;
@@ -67,7 +72,6 @@ a {
 	text-decoration: none;
   &:hover {
     color: $hover-color;
-    /*border-bottom: 1px dotted $hover-color;*/
   }
   ul & {
     text-decoration: none;
@@ -85,7 +89,7 @@ a {
     color: $main-color;
     &:hover {
       color: $hover-color;
-      border-bottom: 1px dotted $hover-color;
+      /*border-bottom: 1px dotted $hover-color;*/
     }
   }
   td {

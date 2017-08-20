@@ -6,7 +6,8 @@ import           Text.Pandoc
 import           Hakyll.Web.Feed
 import           Hakyll.Web.Tags
 import qualified Data.Set as S
-import Data.Char
+import qualified Data.Map as M
+import           Data.Char
 import           Text.Pandoc.Options
 
 
@@ -15,8 +16,17 @@ feedConfig = FeedConfiguration { feedTitle = "austinschwartz.com"
                                , feedDescription = "Austin Schwartz"
                                , feedAuthorName = "Austin Schwartz"
                                , feedRoot = "http://www.austinschwartz.com"
-                               , feedAuthorEmail = "schwar12@purdue.edu"
+                               , feedAuthorEmail = "me@austinschwartz.com"
                                }
+
+mathCtx :: Context a
+mathCtx = field "katex" $ \item -> do
+    metadata <- getMetadata $ itemIdentifier item
+    return $ if "katex" `M.member` metadata
+			then "<link rel=\"stylesheet\" href=\"/css/katex.min.css\">\n\
+								\<script type=\"text/javascript\" src=\"/js/katex.min.js\"></script>\n\
+								\<script src=\"/js/auto-render.min.js\"></script>"
+			else ""
 
 pandocMathCompiler :: Compiler (Item String)
 pandocMathCompiler =
@@ -192,6 +202,19 @@ main = hakyll $ do
             let archiveCtx =
                     listField "posts" postCtx (return posts) `mappend`
                     constField "title" "Posts"            `mappend`
+                    defaultContext
+            makeItem ""
+                >>= loadAndApplyTemplate "partials/posts.html" archiveCtx
+                >>= loadAndApplyTemplate "templates/blank.html" archiveCtx
+                >>= relativizeUrls
+
+    create ["posts-draft/index.html"] $ do
+        route idRoute
+        compile $ do
+            posts <- recentFirst =<< loadAll "posts-draft/*.md"
+            let archiveCtx =
+                    listField "posts" postCtx (return posts) `mappend`
+                    constField "title" "Draft Posts"            `mappend`
                     defaultContext
             makeItem ""
                 >>= loadAndApplyTemplate "partials/posts.html" archiveCtx
