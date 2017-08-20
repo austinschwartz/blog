@@ -1,10 +1,11 @@
 ---
 title: DDR Step Chart DP Problem
-author: Austin
+excerpt: A shell script which converts a music collection to MP3.
 tags: competitive-programming, dynamic-programming
+math: true
 ---
 
-<img src="/assets/images/ddr-chart.jpg" alt="Drawing" style="width: 200px; float: left;margin-right: 15px;"/>
+<img src="/images/ddr-chart.jpg" alt="Example DDR Chart" style="width: 200px; float: left;margin-right: 15px;"/>
 
 I wrote this contest problem recently for the ACM ICPC qualifier at Purdue, to see which students we were taking to the contest. However, I didn't finish writing the problem statement in time for the contest. I still wanted to put it out there somewhere, so I figured here might be a better place than any.
 
@@ -32,7 +33,7 @@ c(i, j) =
     5,& \text{if } i = 1 \text{ and } j = \text{ false}\\
     6,& \text{if } i = 1 \text{ and } j = \text{ true}\\
     6 * c(i - 1, \text{false}),& \text{if } j = \text{true}\\
-    5 * (c(i - 1, \text{false}) + c(i - 1, \text{true})),& \text{if } j = \text{false}\\
+    5 * (c(i - 1, \text{false}) + c(i - 1, \text{true})),& \text{if } j = \text{false}
 \end{cases}
 $$
 

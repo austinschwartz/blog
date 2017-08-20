@@ -1,15 +1,3 @@
 #!/bin/sh
-
-# Delete cache
-rm -rf _site
-./site clean
-
-# Rebuild
-./site build
-
-# Upload (commented out since I build on my server)
-#rsync -avz _site/ root@austinschwartz.com:/var/www/austinschwartz.com/
-
-# Copy to our static site directory :)
-sudo cp -r _site/* /var/www/html/
-
+# Taken from https://github.com/zacharydenton/zach.se
+find _site -name "*.html" -print0 | xargs -0 bin/katex.js

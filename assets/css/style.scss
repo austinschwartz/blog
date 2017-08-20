@@ -53,12 +53,8 @@ body {
   float: left;
 }
 
-h1, h2, h3, em, strong {font-weight: 400;}
+/*h1, h2, h3, em, strong {font-weight: 400;}*/
 h1, h2, h3, h4 {text-align: left;}
-
-strong { 
-  font-weight: bold;
-}
 
 .content h1, .footer h1, h2, h3 {
   font-family: $header-font; 
@@ -171,6 +167,9 @@ ul.menu {
 .menu li {
   display: inline;
   margin: 15px;
+	@media screen and (max-width: 400px) {
+    margin: 10px;
+	}
 }
 
 div.highlight {
@@ -184,6 +183,9 @@ pre {
   font-size: 1.1em;
   background-color: #333233;
   padding: 7px;
+	@media screen and (max-width: 500px) {
+    font-size: .9em;
+	}
 	@media screen and (max-width: 400px) {
     font-size: .8em;
 	}
@@ -239,7 +241,13 @@ code {
 img {
 	display: block;
 	max-width: 100%;
-	height: auto
+	height: auto;
+	@media screen and (max-width: 500px) {
+    max-width: 60%;
+	}
+	@media screen and (max-width: 400px) {
+    max-width: 50%;
+	}
 }
 
 blockquote {
@@ -263,17 +271,24 @@ footer {
 		display: inline-block;
 		font-size: 32px;
 	}
+	@media screen and (max-width: 500px) {
+		font-size: 16px ;
+	}
 	@media screen and (max-width: 400px) {
 		font-size: 12px ;
 	}
 }
 
-.MathJax {
-	@media screen and (max-width: 400px) {
-		font-size: 0.8em;
-	}
+.math, .katex, .katex-html {
+  overflow:auto;
+  max-width: 95vw;
+  @media screen and (max-width: 500px) {
+    font-size: 85%;
+  }
+  @media screen and (max-width: 400px) {
+    font-size: 75%;
+  }
 }
-
 
 h1 + .info { color: #555; margin-top: -15px; }
 

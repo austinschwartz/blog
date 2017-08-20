@@ -1,24 +1,16 @@
-<!DOCTYPE html>
-  <head>
-    $partial("partials/head.html")$
-  </head>
-  <body>
-    <div id="bar"></div>
-    <div class="wrapper">
-      <div class="content">
-        $body$
-      </div>
+<div class='post'>
+  $for(posts)$
+  <div class=overview>
+    <div class=date> $dateLong$ </div>
+    <div class=detail>
+      <a href="$url$">$title$</a>
     </div>
-    <div class="footer">
-      $partial("partials/footer.html")$
+  </div>
+  $endfor$
+
+  <div class=overview>
+    <div class="detail archive">
+      » <a href="/posts/">archive</a>
     </div>
-    <script>
-      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-      ga('create', 'UA-43111202-1', 'auto');
-      ga('send', 'pageview');
-    </script>
-  </body>
-</html>
+  </div>
+</div>
