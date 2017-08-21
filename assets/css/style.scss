@@ -38,6 +38,7 @@ body {
   margin: 0 auto;
   background: $background-color;
   line-height: 1.6;
+  overflow-y: scroll;
 
 	@media screen and (max-width: 400px) {
 		font-size: smaller ;
@@ -85,13 +86,13 @@ a {
     color: $main-color;
     &:hover {
       color: $hover-color;
-      /*border-bottom: 1px dotted $hover-color;*/
     }
   }
-  td {
-    display: table-cell;
-    vertical-align: top; 
-  }
+}
+
+div.books td {
+  display: table-cell;
+  vertical-align: top; 
 }
 
 .header a {
@@ -281,6 +282,7 @@ footer {
 
 .math, .katex, .katex-html {
   overflow:auto;
+  overflow-y:hidden;
   max-width: 95vw;
   @media screen and (max-width: 500px) {
     font-size: 85%;

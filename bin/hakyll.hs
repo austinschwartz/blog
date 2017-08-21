@@ -44,6 +44,7 @@ compiler =
       in pandocCompilerWithTransformM defaultHakyllReaderOptions
                                       writerOptions
                                       pygmentize
+
 renderKaTeX :: Item String -> Compiler (Item String)
 renderKaTeX = withItemBody (unixFilter "bin/katex.js" [])
 
