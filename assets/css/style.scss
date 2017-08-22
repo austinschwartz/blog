@@ -28,9 +28,6 @@ $background-color: $white;
 body {
   font-family: $main-font;
   color: $main-color;
-  font-size: larger;
-  /*line-height: 1.4em;*/
-  /*font-size: 1.25em;*/
 	font-size: 17px;
 	line-height: 1.42857143;
   font-weight: 300;
@@ -39,6 +36,7 @@ body {
   background: $background-color;
   line-height: 1.6;
   overflow-y: scroll;
+  word-wrap: break-word;
 
 	@media screen and (max-width: 400px) {
 		font-size: smaller ;
