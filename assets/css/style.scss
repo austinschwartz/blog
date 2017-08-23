@@ -14,15 +14,16 @@ $white:   #FFF;
 $black:   #333;
 $line-color: #fff;
 
+$theme-color: #71A9F7;
 $main-font: "Nunito", sans-serif;
 $header-font: "Open Sans", sans-serif;
-// $main-font: "Palatino Linotype", Palatino, Georgia, "Times New Roman", Times, serif;
 $title-font: "Open Sans", sans-serif;
-//$title-font: "hydrophilia-iced";
-$a-color:    $red;
+$code-font: roboto-mono, monospace;
+
+$a-color:    $theme-color;
 $h-color:    $black;
 $main-color:    $black;
-$hover-color:   $red;
+$hover-color:   $theme-color;
 $background-color: $white;
 
 body {
@@ -39,7 +40,7 @@ body {
   word-wrap: break-word;
 
 	@media screen and (max-width: 400px) {
-		font-size: smaller ;
+		font-size: smaller;
 	}
 }
 
@@ -167,32 +168,33 @@ ul.menu {
 	}
 }
 
-div.highlight {
-  background: #eee;
-  font-size: 12px;
-  line-height:20px;
-  margin-right: 10px;
+pre {
+  background-color: #000;
+	font-family: $code-font;
 }
 
-pre {
-  font-size: 1.1em;
-  background-color: #333233;
-  padding: 7px;
+.highlight pre {
+    padding: 16px;
+    overflow: auto;
+    font-size: 85%;
+    line-height: 1.45;
+    background-color: #f6f8fa;
+    border-radius: 3px;
 	@media screen and (max-width: 500px) {
-    font-size: .9em;
+    font-size: .7em;
 	}
 	@media screen and (max-width: 400px) {
-    font-size: .8em;
+    font-size: .65em;
 	}
 }
+
+
 
 code {
   font-size: .75em;
   padding: 2px 5px;
   margin: 0 2px;
   background: rgb(238, 238, 238);
-  /*font-family: monaco,Consolas,Lucida Console,monospace; */
-  font-family: Menlo, Monaco, "Andale Mono", "lucida console", "Courier New", monospace;
   border-radius: 4px;
 }
 
