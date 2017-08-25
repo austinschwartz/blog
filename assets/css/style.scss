@@ -168,9 +168,13 @@ ul.menu {
 	}
 }
 
-pre {
-  background-color: #000;
+code {
 	font-family: $code-font;
+}
+
+pre {
+	font-family: $code-font;
+  background-color: #000;
 }
 
 .highlight pre {
