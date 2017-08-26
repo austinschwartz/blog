@@ -58,10 +58,11 @@ main = hakyllWith config $ do
         route $ setRoot `composeRoutes` setExtension "css"
         compile $ getResourceString
           >>= withItemBody (unixFilter "sassc" ["-s"])
+          >>= withItemBody (unixFilter "uglifycss" [])
 
     match "assets/**.css" $ do
         route $ setRoot `composeRoutes` setExtension "css"
-        compile $ getResourceString
+        compile $ compressCssCompiler
 
     match "assets/**.js" $ do
         route $ setRoot `composeRoutes` setExtension "js"
