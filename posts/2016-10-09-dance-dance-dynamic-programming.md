@@ -1,5 +1,5 @@
 ---
-title: DDR Step Chart DP Problem
+title: Dance Dance Revolution DP Problem
 excerpt: A shell script which converts a music collection to MP3.
 tags: competitive-programming, dynamic-programming
 math: true
@@ -52,8 +52,6 @@ public static long charts(int i, int j) {
   else
     return dp[i][j] = 5 * (charts(i - 1, 1) + charts(i - 1, 0));
 }
-
-
 ```
 
 The solution to the problem is then `charts(i, 0) + charts(i, 1)`. We can build this easily using recursion, and also add in some memoization to keep track of previous states, as otherwise we'd be recomputing the same values over and over. 
