@@ -20,14 +20,19 @@ $header-font: "fira-sans",sans-serif;
 $title-font: "fira-sans",sans-serif;
 $code-font: "roboto-mono", monospace;
 
-$a-color:    $theme-color;
+$a-color:    #71A9F7;
 $h-color:    $black;
 $main-color:    $black;
 $hover-color:   $theme-color;
 $background-color: $white;
 
+p {
+  margin: 0 0 12px;
+
+}
 body {
   font-family: $main-font;
+  display:block;
   color: $main-color;
 	font-size: 17px;
 	line-height: 1.42857143;
@@ -50,7 +55,6 @@ body {
   font-size: 2em;
   text-decoration: none;
   margin: 10px 10px 0 0;
-  float: left;
 }
 
 /*h1, h2, h3, em, strong {font-weight: 400;}*/
@@ -62,17 +66,26 @@ h1, h2, h3, h4 {text-align: left;}
 }
 
 a {
-  /*color: $a-color;*/
-	color: $main-color;
+  color: $theme-color;
+text-decoration: none;
   transition: color 0.2s ease-in-out;
-	text-decoration: none;
   &:hover {
-    color: $hover-color;
+    /*color: $hover-color;*/
+    text-decoration: underline;
   }
   ul & {
-    text-decoration: none;
     color: $main-color;
   }
+}
+
+.post a {
+  /*text-decoration: none;*/
+  /*border-bottom: 1px solid $hover-color;*/
+  font-weight: 700;
+}
+
+a.footnoteRef {
+text-decoration: none;
 }
 
 .fa {
@@ -164,13 +177,10 @@ ul.menu {
   display: inline;
   margin: 15px;
 	@media screen and (max-width: 400px) {
-    margin: 10px;
+    width: 100%;
 	}
 }
 
-code {
-	font-family: $code-font;
-}
 
 pre {
 	font-family: $code-font;
@@ -195,14 +205,22 @@ pre {
 
 
 code {
-  font-size: .75em;
-  padding: 2px 5px;
-  margin: 0 2px;
-  background: rgb(238, 238, 238);
+	font-family: $code-font;
+  padding: 2px 4px;
+  font-size: 90%;
+  color: #c7254e;
+  background-color: #f9f2f4;
   border-radius: 4px;
 }
 
+.post-list code {
+  color: #4025c7;
+  background-color: #f3f2f9;
+  margin-right: 5px;
+}
+
 .post {
+  line-height: 1.8;
   /*padding: 15px;*/
 	padding: 0px;
 	font-size: 17.5px;
@@ -297,8 +315,6 @@ footer {
 }
 
 .math, .katex, .katex-html {
-  overflow:auto;
-  overflow-y:hidden;
   max-width: 95vw;
   @media screen and (max-width: 500px) {
     font-size: 85%;
