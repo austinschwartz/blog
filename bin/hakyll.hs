@@ -19,31 +19,32 @@ feedConfiguration = FeedConfiguration {
     feedRoot = "https://austinschwartz.com",
     feedAuthorEmail = "me@austinschwartz.com"
 }
--- modified from bitbucket.org/honk/pandoc-filters
-pygmentize :: Pandoc -> Compiler Pandoc
-pygmentize (Pandoc meta bs) = Pandoc meta <$> mapM highlight bs
+ {-modified from bitbucket.org/honk/pandoc-filters-}
+{-pygmentize :: Pandoc -> Compiler Pandoc-}
+{-pygmentize (Pandoc meta bs) = Pandoc meta <$> mapM highlight bs-}
 
-highlight :: Block -> Compiler Block
-highlight (CodeBlock (_, options, _) code) =
-  RawBlock "html" <$> unsafeCompiler (pygments code options)
-highlight x = return x
+{-highlight :: Block -> Compiler Block-}
+{-highlight (CodeBlock (_, options, _) code) =-}
+  {-RawBlock "html" <$> unsafeCompiler (pygments code options)-}
+{-highlight x = return x-}
 
-pygments :: String -> [String] -> IO String
-pygments code options =
-  case options of
-    (lang:_) ->
-      readProcess "pygmentize" ["-l", toLower <$> lang,  "-f", "html"] code
-    _ -> return $ "<div class =\"highlight\"><pre>" ++ code ++ "</pre></div>"
+{-pygments :: String -> [String] -> IO String-}
+{-pygments code options =-}
+  {-case options of-}
+    {-(lang:_) ->-}
+      {-readProcess "pygmentize" ["-l", toLower <$> lang,  "-f", "html"] code-}
+    {-_ -> return $ "<div class =\"highlight\"><pre>" ++ code ++ "</pre></div>"-}
 
 compiler :: Compiler (Item String)
 compiler =
     let writerOptions = defaultHakyllWriterOptions {
                           writerHTMLMathMethod = KaTeX "" "",
-                          writerHtml5 = True
+                          writerHtml5 = True,
+                          writerHighlight = False
                         }
-      in pandocCompilerWithTransformM defaultHakyllReaderOptions
+      in pandocCompilerWith defaultHakyllReaderOptions
                                       writerOptions
-                                      pygmentize
+                                      {-pygmentize-}
 
 renderKaTeX :: Item String -> Compiler (Item String)
 renderKaTeX = withItemBody (unixFilter "bin/katex.js" [])
@@ -102,14 +103,29 @@ main = hakyllWith config $ do
         route idRoute
         compile $ do
             posts <- recentFirst =<< loadAll postPattern
-            let archiveCtx = 
+            let archiveCtx =
                     listField "posts" postCtx (return posts) `mappend`
-                    constField "title" "Posts" `mappend`
+                    constField "blog" "Posts" `mappend`
                     defaultContext
+
             makeItem ""
-                >>= loadAndApplyTemplate "templates/index.html" archiveCtx
+                >>= loadAndApplyTemplate "templates/posts.html" archiveCtx
                 >>= loadAndApplyTemplate "templates/default.html" archiveCtx
                 >>= relativizeUrls
+
+
+    {-create ["index.html"] $ do-}
+        {-route idRoute-}
+        {-compile $ do-}
+            {-posts <- recentFirst =<< loadAll postPattern-}
+            {-let archiveCtx = -}
+                    {-listField "posts" postCtx (return posts) `mappend`-}
+                    {-constField "title" "Posts" `mappend`-}
+                    {-defaultContext-}
+            {-makeItem ""-}
+                {->>= loadAndApplyTemplate "pages/index.html" archiveCtx-}
+                {->>= loadAndApplyTemplate "templates/default.html" archiveCtx-}
+                {->>= relativizeUrls-}
 
     create ["rss.xml"] $ do
         route idRoute

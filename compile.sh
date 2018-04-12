@@ -8,5 +8,7 @@ ghc --make -threaded bin/hakyll.hs
 ./bin/hakyll clean
 ./bin/hakyll build
 
+sleep 5
+
 ./bin/deploy.sh
 

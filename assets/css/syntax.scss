@@ -1,25 +1,16 @@
 
-// From github light
-$dt-cyan: #005CC5;
-$dt-yellow: #032f62;
-$dt-gray-light: #24292e; // Foreground
-$dt-pink: #d73a49;
-$dt-orange: #d73a49;
-$dt-green: #6f42c1;
-$dt-purple: #005cc5;
-$dt-bblue: #005cc5;
+$dark-blue: #032f62;
+$dark-gray: #24292e;
 
-// from dracula still
-$dt-gray: #44475a;       // Current Line & Selection
-$dt-blue: #6272a4;       // Comment
-$dt-red: #ff5555;
+$blue: #2A9D8F; //#005CC5;
+$red: #E76F51; //#d73a49;
+$purple: #F4A261; //#6f42c1;
 
-/*
- * Styles
- */
+$grey-blue: #6272a4;
+$almost-black: #24292e;
 
 .highlight {
-  color: $dt-gray-light;
+  color: $dark-gray;
 
   .hll,
   .s,
@@ -28,7 +19,6 @@ $dt-red: #ff5555;
   .sc,
   .dl,
   .sd,
-  .s2,
   .se,
   .sh,
   .si,
@@ -36,11 +26,15 @@ $dt-red: #ff5555;
   .sr,
   .s1,
   .ss {
-    color: $dt-yellow;
+    color: $blue;
   }
 
-  .go {
-    color: $dt-gray;
+  .s2 {
+    color: $dark-blue;
+  }
+
+  .go { // ??
+    color: $purple;
   }
 
   .err,
@@ -67,7 +61,8 @@ $dt-red: #ff5555;
   .py,
   .w,
   .bp {
-    color: $dt-gray-light;
+    /*color: $purple;*/
+    color: $almost-black;
   }
 
   .gh,
@@ -90,44 +85,32 @@ $dt-red: #ff5555;
   .cpf,
   .c1,
   .cs {
-    color: $dt-blue;
+    // ?
+    color: $grey-blue
   }
 
   .kd,
   .kt,
   .nb,
+  .k,
   .nl,
   .nv,
   .vc,
   .vg,
   .vi,
   .vm {
-    color: $dt-cyan;
-  }
-
-  .kd,
-  .nb,
-  .nl,
-  .nv,
-  .vc,
-  .vg,
-  .vi,
-  .vm {
-    font-style: italic;
+    color: $blue;
   }
 
   .na,
   .nc,
   .nf,
   .fm {
-    color: $dt-green;
+    color: $purple;
   }
 
   .kc {
-    color: $dt-bblue;
-  }
-  .k {
-    color: $dt-orange;
+    color: $blue;
   }
 
   .o,
@@ -136,8 +119,9 @@ $dt-red: #ff5555;
   .kp,
   .kr,
   .nt,
+	.k,
   .ow {
-    color: $dt-pink;
+    color: $red;
   }
 
   .m,
@@ -147,10 +131,10 @@ $dt-red: #ff5555;
   .mi,
   .mo,
   .il {
-    color: $dt-purple;
+    color: $blue;
   }
 
   .gd {
-    color: $dt-red;
+    // ?
   }
 }
