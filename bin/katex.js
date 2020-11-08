@@ -4,9 +4,22 @@ var fs = require('fs');
 var path = require('path');
 var katex = require('katex');
 var cheerio = require('cheerio');
-var highlight = require('pygments').colorizeSync;
 
+var spawn = require('child_process').spawn,
+      spawnSync = require('child_process').spawnSync,
+      path = require('path'),
+      fs = require('fs');
+var highlight = require('pygments');
 var input = '';
+
+
+function executeSync(target, options) {
+  var spawnRes = spawnSync(highlight.bin, highlight.convert_options(options), {input:target});
+  if (spawnRes.stderr && spawnRes.stderr.toString().length > 1) {
+    console.log("ERRORS: " + spawnRes.stderr.toString());
+  }
+  return spawnRes.stdout.toString();
+}
 
 function unwrap(el) {
 	if (!el) {
@@ -48,11 +61,10 @@ function render(html, cb) {
 		var code = $el.text();
 		var pre = $el.parent();
 		var lang = pre.attr('class');
-		var data = highlight(code, lang, 'html');
+
+    var colorizeParameters = highlight.prepareColorizeParameters(code, lang, 'html');
+    var data = executeSync(colorizeParameters.target, colorizeParameters.options);
     if (!data || data.length < 1) {
-      console.log("data: " + data);
-      console.log("code: " + code);
-      console.log("lang: " + lang);
       console.log("highlighting broke somehow");
     } else {
       pre.replaceWith(data);
@@ -67,7 +79,7 @@ if (process.argv.length > 2) {
     console.log(path);
 		fs.readFile(path, function(err, html) {
       render(html, function(processed) {
-        fs.writeFile(path, processed, () => {});
+        fs.writeFile(path, processed, function(){});
       });
     });
 	});
