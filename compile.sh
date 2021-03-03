@@ -6,7 +6,8 @@ nvm use 10.16.0
 sudo rm -rf _site;
 sudo rm -rf _cache;
 
-ghc --make -threaded bin/hakyll.hs 
+cabal build;
+mv ~/.cabal/bin/blog bin/hakyll
 
 echo "Hakyll build"
 ./bin/hakyll clean

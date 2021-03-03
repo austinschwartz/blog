@@ -38,9 +38,7 @@ feedConfiguration = FeedConfiguration {
 compiler :: Compiler (Item String)
 compiler =
     let writerOptions = defaultHakyllWriterOptions {
-                          writerHTMLMathMethod = KaTeX "" "",
-                          writerHtml5 = True,
-                          writerHighlight = False
+                          writerHTMLMathMethod = KaTeX ""
                         }
       in pandocCompilerWith defaultHakyllReaderOptions
                                       writerOptions
